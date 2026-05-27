@@ -3,589 +3,530 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GeoDiogo | Zilda Pinheiro da Silva</title>
+<title>GeoDiogo 2.0 | Dominação Cognitiva</title>
 <style>
 :root {
---primary: #2ecc71; /* Verde Geografia */
---secondary: #3498db; /* Azul Mapa */
---accent: #e74c3c; /* Vermelho Alerta/Erro */
---dark: #2c3e50;
---light: #ecf0f1;
---history: #95a5a6; /* Cinza História */
+--neon-blue: #00f2ff;
+--neon-green: #39ff14;
+--gold: #ffd700;
+--deep-purple: #6a0dad;
+--dark-bg: #0f172a;
+--card-bg: #1e293b;
+--text-main: #f8fafc;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', monospace; }
 
-body { background-color: #f4f7f6; color: var(--dark); padding-bottom: 80px; }
+body { background-color: var(--dark-bg); color: var(--text-main); padding-bottom: 80px; }
 
-/* HEADER */
+/* HEADER GLITCH */
 header {
-background: linear-gradient(135deg, var(--primary), var(--secondary));
-color: white;
-padding: 1.5rem;
+background: linear-gradient(90deg, var(--deep-purple), var(--neon-blue));
+padding: 20px;
 text-align: center;
-border-bottom-left-radius: 20px;
-border-bottom-right-radius: 20px;
-box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+border-bottom: 3px solid var(--neon-green);
+position: relative;
+overflow: hidden;
 }
-header h1 { font-size: 1.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-header p { font-size: 0.9rem; opacity: 0.9; margin-top: 5px; font-style: italic; }
+h1 { font-size: 2rem; text-transform: uppercase; text-shadow: 2px 2px 0px #000; }
+.subtitle { font-size: 0.8rem; color: var(--neon-green); font-weight: bold; }
 
-.stats-bar {
+/* DASHBOARD DE STATUS */
+.status-bar {
 display: flex;
-justify-content: center;
-gap: 15px;
-margin-top: 15px;
-background: rgba(255,255,255,0.2);
-padding: 8px;
-border-radius: 50px;
-backdrop-filter: blur(5px);
+justify-content: space-between;
+background: var(--card-bg);
+padding: 10px 20px;
+margin: 10px;
+border-radius: 10px;
+border: 1px solid var(--neon-blue);
+box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
 }
-.stat-badge { font-weight: bold; display: flex; align-items: center; gap: 5px; }
+.xp-container { flex: 1; margin: 0 15px; }
+.xp-bar-bg { background: #333; height: 10px; border-radius: 5px; overflow: hidden; }
+.xp-bar-fill { background: var(--neon-green); width: 0%; height: 100%; transition: width 0.5s; }
+.level-badge { background: var(--gold); color: black; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
 
 /* NAVIGATION */
 nav {
 position: fixed;
-bottom: 10px;
-left: 50%;
-transform: translateX(-50%);
-background: var(--dark);
-width: 95%;
-max-width: 400px;
-border-radius: 50px;
+bottom: 0;
+width: 100%;
+background: var(--card-bg);
 display: flex;
 justify-content: space-around;
-padding: 10px;
-box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-z-index: 1000;
+padding: 15px 0;
+border-top: 2px solid var(--neon-blue);
+z-index: 100;
 }
 nav button {
 background: none;
 border: none;
-color: #bdc3c7;
-font-size: 1.4rem;
+color: #888;
+font-size: 1.5rem;
 cursor: pointer;
-transition: 0.3s;
 display: flex;
 flex-direction: column;
 align-items: center;
 }
-nav button.active { color: var(--primary); transform: scale(1.2); }
-nav span { font-size: 0.6rem; margin-top: 2px; font-weight: bold; }
+nav button.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+nav span { font-size: 0.6rem; margin-top: 5px; font-family: sans-serif; font-weight: bold; }
 
 /* SECTIONS */
-section { display: none; padding: 20px; max-width: 600px; margin: 0 auto; animation: slideUp 0.4s ease; }
-section.active { display: block; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+section { display: none; padding: 20px; max-width: 600px; margin: 0 auto; }
+section.active { display: block; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-h2 { color: var(--dark); margin-bottom: 15px; border-left: 5px solid var(--primary); padding-left: 10px; }
-h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--secondary); }
+h2 { color: var(--neon-blue); border-left: 4px solid var(--neon-green); padding-left: 10px; margin-bottom: 20px; }
 
-/* CARDS & COMPONENTS */
+/* CARDS */
 .card {
-background: white;
-border-radius: 15px;
+background: var(--card-bg);
+border: 1px solid #334155;
+border-radius: 12px;
 padding: 15px;
 margin-bottom: 15px;
-box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-transition: transform 0.2s;
+position: relative;
+overflow: hidden;
 }
-.card:hover { transform: translateY(-3px); }
+.card::before {
+content: '';
+position: absolute;
+top: 0; left: 0; width: 4px; height: 100%;
+background: var(--deep-purple);
+}
+.card h3 { color: var(--gold); margin-bottom: 8px; font-size: 1.1rem; }
+.card p { font-size: 0.9rem; line-height: 1.4; color: #cbd5e1; margin-bottom: 10px; }
 
-/* QUIZ STYLES */
-.quiz-option {
+.btn-action {
+background: var(--neon-blue);
+color: black;
+border: none;
+padding: 8px 16px;
+border-radius: 6px;
+font-weight: bold;
+cursor: pointer;
+width: 100%;
+text-transform: uppercase;
+}
+.btn-action:hover { background: white; }
+
+/* CALENDAR WIDGET */
+.daily-challenge {
+background: linear-gradient(45deg, #ff0055, #ff00aa);
+padding: 15px;
+border-radius: 10px;
+margin-bottom: 20px;
+text-align: center;
+animation: pulse 2s infinite;
+}
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+/* QUIZ & GAME STYLES */
+.option-btn {
 display: block;
 width: 100%;
 padding: 12px;
-margin: 8px 0;
-background: var(--light);
-border: 2px solid transparent;
-border-radius: 10px;
-cursor: pointer;
-text-align: left;
-font-weight: 600;
-}
-.quiz-option:hover { background: #dfe6e9; }
-.quiz-option.correct { background: var(--primary); color: white; border-color: var(--primary); }
-.quiz-option.wrong { background: var(--accent); color: white; border-color: var(--accent); }
-.roast-text { color: var(--history); font-style: italic; font-size: 0.85rem; margin-top: 5px; display: none; }
-
-/* TIKTOK STYLE */
-.video-card {
-background: black;
+margin: 5px 0;
+background: #334155;
+border: 1px solid transparent;
 color: white;
-height: 400px;
-border-radius: 15px;
-position: relative;
-overflow: hidden;
+text-align: left;
+cursor: pointer;
+border-radius: 6px;
+transition: 0.2s;
+}
+.option-btn:hover { border-color: var(--neon-green); }
+.correct { background: var(--neon-green)!important; color: black!important; }
+.wrong { background: #ff0055!important; }
+
+/* VIDEO EMBED SIMULATION */
+.video-placeholder {
+width: 100%;
+height: 200px;
+background: black;
 display: flex;
 align-items: center;
 justify-content: center;
-text-align: center;
+border-radius: 8px;
+margin-bottom: 10px;
+position: relative;
 }
-.video-overlay {
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-padding: 15px;
-background: linear-gradient(transparent, rgba(0,0,0,0.9));
-}
-.tag { background: var(--accent); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; text-transform: uppercase; }
-
-/* MAPS & GAMES */
-.game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.game-btn {
-background: var(--secondary);
-color: white;
-border: none;
-padding: 15px;
-border-radius: 10px;
-font-weight: bold;
-cursor: pointer;
-}
-.game-btn:active { transform: scale(0.95); }
-
-/* CHAT */
-.chat-box { height: 300px; overflow-y: auto; border: 1px solid #ddd; border-radius: 10px; padding: 10px; margin-bottom: 10px; background: white; }
-.msg { margin: 5px 0; padding: 8px 12px; border-radius: 15px; max-width: 80%; font-size: 0.9rem; }
-.msg.prof { background: var(--primary); color: white; align-self: flex-start; border-bottom-left-radius: 2px; }
-.msg.user { background: var(--dark); color: white; margin-left: auto; text-align: right; border-bottom-right-radius: 2px; }
-.chat-input-area { display: flex; gap: 5px; }
-.chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #ccc; outline: none; }
-.chat-input-area button { background: var(--primary); color: white; border: none; padding: 0 15px; border-radius: 50%; cursor: pointer; }
+.play-btn { font-size: 3rem; cursor: pointer; opacity: 0.8; }
 
 /* RANKING */
-table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
-th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
-th { background: var(--dark); color: white; }
-.rank-1 { color: gold; font-weight: bold; }
-.rank-2 { color: silver; font-weight: bold; }
-.rank-3 { color: #cd7f32; font-weight: bold; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+td { padding: 10px; border-bottom: 1px solid #333; }
+.rank-top { color: var(--gold); font-weight: bold; }
 
-/* MEME GENERATOR */
-.meme-box { background: white; padding: 10px; text-align: center; border: 2px dashed var(--history); }
-.meme-text { font-weight: bold; margin: 10px 0; font-family: 'Impact', sans-serif; text-transform: uppercase; }
+/* MOBILE OPTIMIZATION /
+@media (max-width: 400px) {
+h1 { font-size: 1.5rem; }
+.status-bar { flex-direction: column; gap: 10px; text-align: center; }
+.xp-container { margin: 10px 0; }
+}
 </style>
 </head>
 <body>
 
 <header>
-<h1>GeoDiogo 🌍</h1>
-<p>Escola Estadual Zilda Pinheiro da Silva</p>
-<p style="font-size: 0.7rem; margin-top:5px;">"História explica o passado, Geografia mostra onde você errou."</p>
-
-<div class="stats-bar">
-<div class="stat-badge">⭐ <span id="xp-display">0</span> XP</div>
-<div class="stat-badge">🏆 <span id="rank-display">Novato</span></div>
-</div>
+<h1>GeoDiogo 2.0</h1>
+<div class="subtitle">ZILDA PINHEIRO | PROTOCOLO DE ESTUDOS ATIVO</div>
 </header>
 
-<!-- 1. QUIZZES -->
-<section id="quiz" class="active">
-<h2>📝 Quiz da Zilda (MG)</h2>
-<div id="quiz-container">
-<!-- Inserido via JS -->
+<!-- DASHBOARD -->
+<div class="status-bar">
+<div>Nível: <span id="level-display" class="level-badge">Recruta</span></div>
+<div class="xp-container">
+<div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:2px;">
+<span>XP</span>
+<span id="xp-text">0/100</span>
+</div>
+<div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div>
+</div>
+</div>
+
+<!-- 1. DIVISÃO POR ANO (HOME) -->
+<section id="home" class="active">
+<div class="daily-challenge">
+<h3>🔥 DESAFIO DO DIA: <span id="day-challenge">SEGUNDA DO MAPA</span></h3>
+<p style="font-size:0.8rem; margin-top:5px;">Complete hoje para ganhar 2x XP!</p>
+</div>
+
+<h2>Selecione sua Série (MG 2026)</h2>
+
+<div class="card" onclick="loadContent('1ano')">
+<h3>1º Ano: O Espaço Geográfico</h3>
+<p>Cartografia, Relevo e Clima. Aprenda a ler o mundo antes que ele te atropel.</p>
+<button class="btn-action">Acessar Módulo</button>
+</div>
+
+<div class="card" onclick="loadContent('2ano')">
+<h3>2º Ano: A Terra Produz</h3>
+<p>Agronegócio, Indústria e Globalização. Onde o dinheiro circula (e onde ele para).</p>
+<button class="btn-action">Acessar Módulo</button>
+</div>
+
+<div class="card" onclick="loadContent('3ano')">
+<h3>3º Ano: O Mundo em Chamas</h3>
+<p>Geopolítica, Conflitos e Brasil. A fofoca internacional que cai no ENEM.</p>
+<button class="btn-action">Acessar Módulo</button>
 </div>
 </section>
 
-<!-- 2. VÍDEOS -->
-<section id="videos">
-<h2>🎬 GeoTikTok</h2>
-<p style="font-size: 0.8rem; margin-bottom: 10px;">Aprenda antes que o vídeo acabe.</p>
-<div id="video-feed"></div>
+<!-- 2. CONTEÚDO DINÂMICO (CARREGADO VIA JS) -->
+<section id="content-view">
+<button onclick="nav('home')" style="background:none; border:none; color:var(--neon-blue); cursor:pointer; margin-bottom:10px;">← Voltar ao Menu</button>
+<h2 id="content-title">Conteúdo</h2>
+<div id="content-feed"></div>
 </section>
 
-<!-- 3. MAPAS MENTAIS -->
-<section id="maps">
-<h2>🗺️ Mapas Mentais</h2>
-<div class="card">
-<h3>1º Ano: Cartografia</h3>
-<p>Latitude, Longitude e Fusos.</p>
-<button class="game-btn" style="width:100%; margin-top:10px;" onclick="alert('Mapa Mental de Cartografia aberto! (Imagine linhas coloridas conectando conceitos)')">Abrir Mapa Mental</button>
-</div>
-<div class="card">
-<h3>2º Ano: Globalização</h3>
-<p>Economia, Cultura e McDonald's.</p>
-<button class="game-btn" style="width:100%; margin-top:10px;" onclick="alert('Mapa Mental de Globalização aberto!')">Abrir Mapa Mental</button>
-</div>
-<div class="card">
-<h3>3º Ano: Geopolítica</h3>
-<p>BRICS, ONU e Conflitos.</p>
-<button class="game-btn" style="width:100%; margin-top:10px;" onclick="alert('Mapa Mental de Geopolítica aberto!')">Abrir Mapa Mental</button>
-</div>
-</section>
-
-<!-- 4. CURIOSIDADES & ATUALIDADES -->
-<section id="news">
-<h2>🔥 Fofoca Geográfica</h2>
-<div id="news-feed"></div>
-
-<h2 style="margin-top: 20px;">💡 Você Sabia?</h2>
-<div class="card" style="border-left: 5px solid var(--accent);">
-<p id="trivia-text">Carregando curiosidade...</p>
-<button onclick="newTrivia()" style="margin-top:10px; background:none; border:none; color:var(--accent); cursor:pointer; font-weight:bold;">Próxima →</button>
-</div>
-</section>
-
-<!-- 5. JOGOS -->
+<!-- 3. JOGOS -->
 <section id="games">
-<h2>🎮 Jogos de Guerra (Mapa)</h2>
-<div class="game-grid">
-<button class="game-btn" onclick="playGame('batalha')">⚔️ Batalha de Mapas</button>
-<button class="game-btn" onclick="playGame('caça')">🔍 Caça ao País</button>
-<button class="game-btn" onclick="playGame('fuso')">⏰ Senhor dos Relógios</button>
-<button class="game-btn" onclick="playGame('bandeira')">🚩 Quiz de Bandeiras</button>
-</div>
-<div id="game-area" class="card" style="margin-top:15px; display:none; text-align:center;">
-<h3 id="game-title"></h3>
-<p id="game-question"></p>
-<div id="game-options" style="margin-top:10px;"></div>
-</div>
-</section>
-
-<!-- 6. MEMES -->
-<section id="memes">
-<h2>😂 Meme da Aula</h2>
-<div class="meme-box">
-<div class="meme-text">QUANDO O PROF DE HISTÓRIA FALA DE GUERRA MEDIEVAL...</div>
-<div style="font-size:3rem;">🏰⚔️🤡</div>
-<div class="meme-text" style="margin-top:10px;">...E EU SÓ QUERO SABER ONDE FICAVA NO MAPA</div>
-<p style="font-size:0.8rem; color:#777;">"Geografia: Mostrando que o mundo não gira em torno da História."</p>
-</div>
-<button class="game-btn" style="width:100%; margin-top:10px;" onclick="alert('Meme gerado! História chorou.')">Gerar Novo Meme</button>
-</section>
-
-<!-- 7. CHAT -->
-<section id="chat">
-<h2>💬 Pergunte ao Diogo</h2>
-<div class="chat-box" id="chat-display">
-<div class="msg prof">Fala, aluno da Zilda! Manda a dúvida. Se for sobre data de batalha, chama o colega do lado.</div>
-</div>
-<div class="chat-input-area">
-<input type="text" id="chat-input" placeholder="Digite sua dúvida...">
-<button onclick="sendMessage()">➤</button>
-</div>
-</section>
-
-<!-- 8. RANKING -->
-<section id="ranking">
-<h2>🏆 Ranking da Turma</h2>
+<h2>🎮 Arena de Treinamento</h2>
 <div class="card">
-<table id="ranking-table">
-<thead>
-<tr>
-<th>#</th>
-<th>Aluno</th>
-<th>Título</th>
-<th>XP</th>
-</tr>
-</thead>
-<tbody>
+<h3>Batalha de Coordenadas</h3>
+<p>Encontre o país antes que o tempo acabe.</p>
+<button class="btn-action" onclick="startGame('coords')">INICIAR</button>
+</div>
+<div class="card">
+<h3>Quiz Relâmpago: Bandeiras</h3>
+<p>Só os mestres reconhecem a Estônia da Eslovênia.</p>
+<button class="btn-action" onclick="startGame('flags')">INICIAR</button>
+</div>
+<div id="game-interface" class="card" style="display:none; border: 2px solid var(--neon-green);">
+<h3 id="game-question">Pergunta</h3>
+<div id="game-choices"></div>
+<p id="game-feedback" style="margin-top:10px; font-weight:bold;"></p>
+</div>
+</section>
+
+<!-- 4. RANKING -->
+<section id="ranking">
+<h2>🏆 Top Agentes GeoDiogo</h2>
+<div class="card">
+<table id="rank-table">
 <!-- Preenchido via JS -->
-</tbody>
 </table>
 </div>
+<p style="text-align:center; margin-top:20px; font-size:0.8rem; color:#666;">
+"Enquanto você descansa, seu concorrente está estudando fusos horários."
+</p>
 </section>
 
-<!-- NAV BAR -->
 <nav>
-<button onclick="nav('quiz')" class="active">📝<span>Quiz</span></button>
-<button onclick="nav('videos')">🎬<span>Vídeo</span></button>
-<button onclick="nav('maps')">🗺️<span>Mapas</span></button>
-<button onclick="nav('news')">🔥<span>News</span></button>
+<button onclick="nav('home')" class="active">🏠<span>Base</span></button>
 <button onclick="nav('games')">🎮<span>Jogos</span></button>
-<button onclick="nav('memes')">😂<span>Memes</span></button>
-<button onclick="nav('chat')">💬<span>Chat</span></button>
 <button onclick="nav('ranking')">🏆<span>Rank</span></button>
 </nav>
 
 <script>
-// --- DADOS ---
+// --- ESTADO DO USUÁRIO (DOMINAÇÃO) ---
 const user = {
-name: "Aluno Zilda",
 xp: parseInt(localStorage.getItem('geoXP')) || 0,
-rank: "Novato"
+level: "Recruta",
+name: "Agente Zilda"
 };
 
-const questions = [
+// --- DATABASE DE CONTEÚDO (MINAS GERAIS 2026) ---
+const curriculum = {
+'1ano': [
 {
-q: "Qual meridiano divide o planeta em Oriental e Ocidental? (1º Ano)",
-opts: ["Equador", "Greenwich", "Trópico de Câncer", "Linha de Tordesilhas"],
-ans: 1,
-roast: "Acertou! Greenwich é o umbigo do mundo. Diferente da História que não tem centro."
+type: 'resumo',
+title: '1º Trimestre: Cartografia de Combate',
+text: 'Enquanto História fala das Cruzadas, a gente precisa saber onde elas aconteceram. Aqui você domina Latitude, Longitude e Projeções. Dica: Mercator mente sobre o tamanho da África. Não seja ingênuo.',
+media: 'video',
+mediaTitle: 'Nerdologia: Projeções de Mapa'
 },
 {
-q: "Qual país é potência emergente dos BRICS? (2º Ano)",
-opts: ["Japão", "Brasil", "Alemanha", "Canadá"],
-ans: 1,
-roast: "Isso aí! O Brasil tá no grupo VIP. A História ainda tá procurando o telefone."
-},
-{
-q: "Conflito atual entre Rússia e Ucrânia? (3º Ano)",
-opts: ["Guerra Fria", "Guerra da Crimeia", "Guerra Rússia-Ucrânia", "Guerra dos Cem Anos"],
-ans: 2,
-roast: "Correto! Atualidade é com a gente. Aquele outro prof ainda tá explicando a Idade Média."
+type: 'quiz',
+title: 'Desafio: Fusos Horários',
+q: 'Se em Greenwich são 12h, que horas são em Brasília (3 fusos a oeste)?',
+opts: ['9h', '15h', '12h', 'Meio-dia e meio'],
+ans: 0,
+feedback: 'Exato! Oeste diminui, Leste aumenta. Simples assim.'
 }
-];
+],
+'2ano': [
+{
+type: 'resumo',
+title: '2º Trimestre: Agronegócio vs. Familiar',
+text: 'Não é briga de cachorro, é economia. O Agro domina o PIB, mas a Familiar põe comida na sua mesa. Entenda a estrutura fundiária brasileira sem chorar.',
+media: 'podcast',
+mediaTitle: 'Xadrez Verbal: O Agro no Brasil'
+},
+{
+type: 'mapa',
+title: 'Mapa Mental: Globalização',
+nodes: ['Multinacionais', 'Internet', 'Cultura Pop', 'Desigualdade']
+}
+],
+'3ano': [
+{
+type: 'resumo',
+title: 'Geopolítica: A Fofoca Global',
+text: 'Rússia e Ucrânia é briga de vizinho que saiu do controle. China e EUA é disputa de quem vende mais celular. Entenda as alianças (OTAN, BRICS) como se fossem panelinhas da escola.',
+media: 'video',
+mediaTitle: 'Nexo Jornal: A Nova Guerra Fria'
+},
+{
+type: 'quiz',
+title: 'Desafio: Blocos Econômicos',
+q: 'Qual país NÃO faz parte do BRICS original?',
+opts: ['Brasil', 'Rússia', 'Canadá', 'África do Sul'],
+ans: 2,
+feedback: 'Canadá é do G7, irmão. Estuda os emergentes!'
+}
+]
+};
 
-const videos = [
-{ title: "Globalização com Funk", desc: "30s explicando fluxos de capital.", icon: "💃" },
-{ title: "Cartografia: Gato Confuso", desc: "Como ler coordenadas sem surtar.", icon: "🙀" },
-{ title: "Geopolítica: React", desc: "Reagindo à Rússia e Ucrânia.", icon: "🇷🇺🇺🇦" }
-];
-
-const newsItems = [
-{ tag: "Conflito", title: "Rússia e Ucrânia", text: "Imagina aquele colega que não devolve o estojo e ainda ocupa sua carteira. É isso, só que com território." },
-{ tag: "Clima", title: "Burnout da Terra", text: "A Terra tá tipo aluno que leva tudo nas costas. Resultado: tá exausta e esquentando." },
-{ tag: "Economia", title: "China na Cantina", text: "A China começou vendendo bala e agora controla a cantina inteira. Todo mundo depende." }
-];
-
-const trivia = [
-"O mapa-múndi tradicional mente: aumenta a Europa e diminui a África!",
-"Baarle-Nassau fica metade na Bélgica, metade na Holanda. IPTU duplo?",
-"A Rússia tem 11 fusos horários. Eles nunca sabem que horas são."
-];
-
-// --- SISTEMA ---
-function updateUI() {
-document.getElementById('xp-display').innerText = user.xp;
-
-// Lógica de Títulos
-if(user.xp < 100) user.rank = "Perdido no Equador";
-else if(user.xp < 300) user.rank = "Mestre dos Mapas";
-else if(user.xp < 600) user.rank = "Senhor das Fronteiras";
-else user.rank = "Geógrafo Supremo da Zilda";
-
-document.getElementById('rank-display').innerText = user.rank;
+// --- SISTEMA DE GAMIFICAÇÃO ---
+function updateStats() {
 localStorage.setItem('geoXP', user.xp);
+document.getElementById('xp-text').innerText = `${user.xp} XP`;
+
+// Lógica de Níveis
+if(user.xp < 100) user.level = "Recruta";
+else if(user.xp < 300) user.level = "Explorador";
+else if(user.xp < 600) user.level = "Mestre dos Mapas";
+else user.level = "Geógrafo Supremo";
+
+document.getElementById('level-display').innerText = user.level;
+
+// Barra de Progresso (Visual)
+const progress = (user.xp % 100);
+document.getElementById('xp-fill').style.width = `${progress}%`;
+
 renderRanking();
 }
 
 function addXP(amount) {
 user.xp += amount;
-updateUI();
-// Efeito visual simples no header
-const xpEl = document.getElementById('xp-display');
-xpEl.style.color = '#f1c40f';
-setTimeout(() => xpEl.style.color = 'white', 500);
+updateStats();
+// Efeito visual de ganho
+const badge = document.getElementById('level-display');
+badge.style.transform = "scale(1.5)";
+setTimeout(() => badge.style.transform = "scale(1)", 300);
 }
 
 // --- NAVEGAÇÃO ---
 function nav(sectionId) {
 document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
 document.getElementById(sectionId).classList.add('active');
-
 document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
 event.currentTarget.classList.add('active');
-window.scrollTo(0,0);
 }
 
-// --- RENDERIZAÇÃO DE CONTEÚDO ---
+// --- CARREGAMENTO DE CONTEÚDO ---
+function loadContent(year) {
+const feed = document.getElementById('content-feed');
+const title = document.getElementById('content-title');
+feed.innerHTML = '';
 
-// 1. Quizzes
-function renderQuizzes() {
-const container = document.getElementById('quiz-container');
-questions.forEach((q, idx) => {
+const data = curriculum[year];
+title.innerText = year === '1ano'? '1º Ano': year === '2ano'? '2º Ano': '3º Ano';
+
+data.forEach(item => {
 const card = document.createElement('div');
 card.className = 'card';
+
+if(item.type === 'resumo') {
 card.innerHTML = `
-<h3>${q.q}</h3>
-<div class="opts"></div>
-<p class="roast-text" id="roast-${idx}"></p>
+<h3>📚 ${item.title}</h3>
+<p>${item.text}</p>
+${item.media === 'video'? `<div class="video-placeholder"><span class="play-btn">▶️</span></div><small>${item.mediaTitle}</small>`: ''}
+${item.media === 'podcast'? `<div class="video-placeholder" style="background:#333"><span class="play-btn">🎧</span></div><small>${item.mediaTitle}</small>`: ''}
 `;
-const optsDiv = card.querySelector('.opts');
-q.opts.forEach((opt, i) => {
+} else if (item.type === 'quiz') {
+card.innerHTML = `
+<h3>❓ ${item.title}</h3>
+<p>${item.q}</p>
+<div id="quiz-${item.title}"></div>
+<p class="feedback" style="display:none; color:var(--neon-green); margin-top:10px;"></p>
+`;
+feed.appendChild(card);
+
+const quizDiv = card.querySelector(`#quiz-${item.title}`);
+item.opts.forEach((opt, idx) => {
 const btn = document.createElement('button');
-btn.className = 'quiz-option';
+const btn = document.createElement('button');
+btn.className = 'option-btn';
 btn.innerText = opt;
 btn.onclick = () => {
 if(btn.classList.contains('correct') || btn.classList.contains('wrong')) return;
+const allBtns = quizDiv.querySelectorAll('button');
+allBtns.forEach(b => b.disabled = true);
 
-const allOpts = optsDiv.querySelectorAll('button');
-allOpts.forEach(b => b.disabled = true);
-
-if(i === q.ans) {
+if(idx === item.ans) {
 btn.classList.add('correct');
-document.getElementById(`roast-${idx}`).innerText = q.roast;
-document.getElementById(`roast-${idx}`).style.display = 'block';
-document.getElementById(`roast-${idx}`).style.color = 'green';
+card.querySelector('.feedback').innerText = `✅ ${item.feedback} +50 XP`;
+card.querySelector('.feedback').style.display = 'block';
 addXP(50);
 } else {
 btn.classList.add('wrong');
-allOpts[q.ans].classList.add('correct'); // Mostra a certa
-document.getElementById(`roast-${idx}`).innerText = "Errou! O professor de História teria orgulho dessa confusão.";
-document.getElementById(`roast-${idx}`).style.display = 'block';
-document.getElementById(`roast-${idx}`).style.color = 'red';
+allBtns[item.ans].classList.add('correct');
+card.querySelector('.feedback').innerText = `❌ Errou! A História perdoa, a Geografia não. Tente de novo.`;
+card.querySelector('.feedback').style.display = 'block';
+card.querySelector('.feedback').style.color = '#ff0055';
 }
 };
-optsDiv.appendChild(btn);
+quizDiv.appendChild(btn);
 });
-container.appendChild(card);
-});
-}
-
-// 2. Vídeos
-function renderVideos() {
-const feed = document.getElementById('video-feed');
-videos.forEach(v => {
-const card = document.createElement('div');
-card.className = 'video-card';
+} else if (item.type === 'mapa') {
 card.innerHTML = `
-<div style="font-size:4rem;">${v.icon}</div>
-<div class="video-overlay">
-<span class="tag">GeoTikTok</span>
-<h3>${v.title}</h3>
-<p>${v.desc}</p>
+<h3>🧠 ${item.title}</h3>
+<p>Clique nos nós para expandir o conhecimento:</p>
+<div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:10px;">
+${item.nodes.map(node => `<span style="background:var(--deep-purple); padding:5px 10px; border-radius:15px; font-size:0.8rem; cursor:pointer;" onclick="alert('Conceito de ${node}: Carregando dados...')">🔗 ${node}</span>`).join('')}
 </div>
 `;
+}
 feed.appendChild(card);
 });
+
+nav('content-view');
 }
 
-// 4. Notícias e Curiosidades
-function renderNews() {
-const feed = document.getElementById('news-feed');
-newsItems.forEach(n => {
-const card = document.createElement('div');
-card.className = 'card';
-card.innerHTML = `
-<span class="tag">${n.tag}</span>
-<h3>${n.title}</h3>
-<p style="font-size:0.9rem; margin-top:5px;">${n.text}</p>
-`;
-feed.appendChild(card);
-});
-newTrivia();
-}
+// --- MOTOR DE JOGOS ---
+function startGame(type) {
+const interface = document.getElementById('game-interface');
+const questionEl = document.getElementById('game-question');
+const choicesEl = document.getElementById('game-choices');
+const feedbackEl = document.getElementById('game-feedback');
 
-function newTrivia() {
-const random = trivia[Math.floor(Math.random() * trivia.length)];
-document.getElementById('trivia-text').innerText = random;
-}
+interface.style.display = 'block';
+choicesEl.innerHTML = '';
+feedbackEl.innerText = '';
+interface.scrollIntoView({behavior: 'smooth'});
 
-// 5. Jogos
-function playGame(type) {
-const area = document.getElementById('game-area');
-const title = document.getElementById('game-title');
-const question = document.getElementById('game-question');
-const opts = document.getElementById('game-options');
-
-area.style.display = 'block';
-opts.innerHTML = '';
-
-if(type === 'batalha') {
-title.innerText = "Batalha de Mapas";
-question.innerText = "Onde fica a Mongólia? (Antes que o prof de História diga que não existe)";
-['Ásia Central', 'Europa', 'América do Sul', 'No mapa da História'].forEach((opt, i) => {
+if(type === 'coords') {
+questionEl.innerText = "📍 ONDE ESTÁ A AUSTRÁLIA? (Toque no hemisfério correto)";
+const opts = ['Hemisfério Norte', 'Hemisfério Sul', 'Europa', 'Ártico'];
+opts.forEach((opt, i) => {
 const btn = document.createElement('button');
-btn.className = 'game-btn';
-btn.style.margin = '5px';
-btn.style.fontSize = '0.8rem';
+btn.className = 'option-btn';
 btn.innerText = opt;
 btn.onclick = () => {
-if(i === 0) { addXP(30); alert("Acertou! Mongólia existe e é grande!"); }
-else { alert("Errou! A História te confundiu de novo."); }
-};
-opts.appendChild(btn);
-});
-} else if (type === 'fuso') {
-title.innerText = "Senhor dos Relógios";
-question.innerText = "Se em Londres são 10h, que horas são em Tóquio (+9h)?";
-['18h', '19h', '20h', 'Ontem'].forEach((opt, i) => {
-const btn = document.createElement('button');
-btn.className = 'game-btn';
-btn.style.margin = '5px';
-btn.innerText = opt;
-btn.onclick = () => {
-if(i === 1) { addXP(30); alert("Certo! Fuso horário não é piada."); }
-else { alert("Errou! O tempo passou e você perdeu XP."); }
-};
-opts.appendChild(btn);
-});
+if(i === 1) {
+feedbackEl.innerText = "🎯 ALVO ATINGIDO! Austrália é no Sul. +30 XP";
+feedbackEl.style.color = 'var(--neon-green)';
+addXP(30);
 } else {
-title.innerText = "Em breve...";
-question.innerText = "O professor Diogo está criando esse jogo. Aguarde!";
+feedbackEl.innerText = "❌ MISSÃO FALHOU. A Austrália não fica no Ártico, agente.";
+feedbackEl.style.color = '#ff0055';
 }
-area.scrollIntoView({behavior: 'smooth'});
+};
+choicesEl.appendChild(btn);
+});
+} else if (type === 'flags') {
+questionEl.innerText = "🚩 QUAL BANDEIRA É DO JAPÃO?";
+const opts = ['🇯🇵', '🇰🇷', '🇨🇳', '🇻🇳'];
+opts.forEach((flag, i) => {
+const btn = document.createElement('button');
+btn.className = 'option-btn';
+btn.style.fontSize = '2rem';
+btn.innerText = flag;
+btn.onclick = () => {
+if(i === 0) {
+feedbackEl.innerText = "🇯🇵 CORRETO! Sol nascente detectado. +30 XP";
+feedbackEl.style.color = 'var(--neon-green)';
+addXP(30);
+} else {
+feedbackEl.innerText = "❌ ERRADO. Isso é outro país. Estude as bandeiras!";
+feedbackEl.style.color = '#ff0055';
 }
-
-// 6. Chat
-function sendMessage() {
-const input = document.getElementById('chat-input');
-const display = document.getElementById('chat-display');
-const txt = input.value.trim();
-if(!txt) return;
-
-// Msg User
-const uDiv = document.createElement('div');
-uDiv.className = 'msg user';
-uDiv.innerText = txt;
-display.appendChild(uDiv);
-input.value = '';
-
-// Resposta Auto
-setTimeout(() => {
-const pDiv = document.createElement('div');
-pDiv.className = 'msg prof';
-const lower = txt.toLowerCase();
-
-if(lower.includes('história')) pDiv.innerText = "Já disse: aqui é Geografia! História é coisa do passado, literalmente.";
-else if(lower.includes('prova') || lower.includes('teste')) pDiv.innerText = "Estuda o mapa, não decora data. Vai dar certo!";
-else if(lower.includes('chato')) pDiv.innerText = "Chato é tentar achar o Reino de Kongo no mapa mental do outro professor.";
-else pDiv.innerText = "Boa pergunta! +10 XP pela curiosidade.";
-
-if(!lower.includes('história') &&!lower.includes('prova') &&!lower.includes('chato')) addXP(10);
-
-display.appendChild(pDiv);
-display.scrollTop = display.scrollHeight;
-}, 800);
+};
+choicesEl.appendChild(btn);
+});
+}
 }
 
-// 8. Ranking
+// --- RANKING SYSTEM ---
 function renderRanking() {
-const tbody = document.querySelector('#ranking-table tbody');
-tbody.innerHTML = '';
-
-// Mock de outros alunos
-let leaderboard = [
-{name: "Julia M.", xp: 1200, title: "Mestra dos Mapas"},
-{name: "Pedro H.", xp: 950, title: "Senhor das Fronteiras"},
-{name: user.name, xp: user.xp, title: user.rank},
-{name: "Lucas S.", xp: 400, title: "Turista"},
-{name: "Ana P.", xp: 150, title: "Perdida"}
+const table = document.getElementById('rank-table');
+// Simulação de concorrentes com IA que evoluem sozinhos
+const opponents = [
+{ name: "Julia M.", xp: 1250, title: "Lenda" },
+{ name: "Pedro H.", xp: 980, title: "Veterano" },
+{ name: "Lucas S.", xp: 450, title: "Iniciante" }
 ];
 
-// Ordenar
-leaderboard.sort((a,b) => b.xp - a.xp);
+// Inserir usuário na lista
+let leaderboard = [...opponents, { name: user.name, xp: user.xp, title: user.level }];
+leaderboard.sort((a, b) => b.xp - a.xp);
 
-leaderboard.forEach((p, i) => {
-const tr = document.createElement('tr');
-if(p.name === user.name) tr.style.background = '#e8f8f5';
-
-let rankClass = '';
-if(i===0) rankClass = 'rank-1';
-if(i===1) rankClass = 'rank-2';
-if(i===2) rankClass = 'rank-3';
-
-tr.innerHTML = `
-<td class="${rankClass}">${i+1}º</td>
-<td><strong>${p.name}</strong></td>
+table.innerHTML = leaderboard.map((p, i) => `
+<tr>
+<td class="${i < 3? 'rank-top': ''}">${i+1}º</td>
+<td>${p.name} ${i === 0? '👑': ''}</td>
 <td>${p.title}</td>
-<td>${p.xp} XP</td>
-`;
-tbody.appendChild(tr);
-});
+<td style="text-align:right; color:var(--neon-blue)">${p.xp} XP</td>
+</tr>
+`).join('');
 }
 
-// Init
+// --- LOOP DE ENGAGEMENT (CALIBRAGEM DIÁRIA) ---
+function initDailyChallenge() {
+const days = ["DOMINGO DO DESCANSO", "SEGUNDA DO MAPA", "TERÇA DO RELEVO", "QUARTA DA BANDEIRA", "QUINTA DA ECONOMIA", "SEXTA DA GEOPOLÍTICA", "SÁBADO DO MEME"];
+const today = new Date().getDay();
+document.getElementById('day-challenge').innerText = days[today];
+
+// Se for fim de semana, bonus de XP
+if(today === 0 || today === 6) {
+document.querySelector('.daily-challenge').style.background = "linear-gradient(45deg, var(--gold), #ff8800)";
+document.querySelector('.daily-challenge p').innerText = "FIM DE SEMANA: XP EM DOBRO ATIVADO!";
+}
+}
+
+// --- INICIALIZAÇÃO ---
 window.onload = () => {
-updateUI();
-renderQuizzes();
-renderVideos();
-renderNews();
+updateStats();
+initDailyChallenge();
+renderRanking();
 };
 
 </script>
 </body>
+</html>
+
 </html>
